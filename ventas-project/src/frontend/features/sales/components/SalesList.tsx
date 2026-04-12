@@ -1,7 +1,12 @@
+interface SaleItem {
+  product: string;
+  quantity: number;
+  price: number;
+}
+
 interface Sale {
-    product: string;
-    quantity: number;
-    price: number;
+  items: SaleItem[];
+  date: string;
 }
 
 interface SalesListProps {
@@ -13,7 +18,14 @@ const SalesList: React.FC<SalesListProps> = ({ sales }) => {
         <ul>
             {sales.map((sale, index) => (
                 <li key = {index}>
-                    {sale.product} - {sale.quantity} x ${sale.price} = ${sale.quantity * sale.price}
+                    <strong>Venta {index + 1}</strong>
+                    <ul>
+                        {sale.items.map((item, i) => (
+                            <li key={i}>
+                                {item.product} - {item.quantity} * ${item.price}
+                            </li>
+                        ))}
+                    </ul>
                 </li>
             ))}
         </ul>

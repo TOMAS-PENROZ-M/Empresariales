@@ -1,7 +1,12 @@
+interface SaleItem {
+  product: string;
+  quantity: number;
+  price: number;
+}
+
 interface Sale {
-    product: string;
-    quantity: number;
-    price: number;
+  items: SaleItem[];
+  date: string;
 }
 
 interface SalesSummaryProps {
@@ -11,7 +16,9 @@ interface SalesSummaryProps {
 
 const SalesSummary: React.FC<SalesSummaryProps> = ({ sales }) => {
     const total = sales.reduce(
-        (acc, sale) => acc + sale.quantity * sale.price, 0
+        (acc, sale) => acc + sale.items.reduce(
+            (sub, item) => sub + item.quantity * item.price, 0
+        ), 0
     );
 
     return (

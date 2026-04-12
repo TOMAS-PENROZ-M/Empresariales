@@ -1,9 +1,14 @@
 import { useState } from "react";
 
-interface Sale {
+interface SaleItem {
   product: string;
   quantity: number;
   price: number;
+}
+
+interface Sale {
+  items: SaleItem[];
+  date: string;
 }
 
 interface SalesFormProps {
@@ -12,38 +17,79 @@ interface SalesFormProps {
 
 
 const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
-  const [product, setProduct] = useState<string>("");
-  const [quantity, setQuantity] = useState<number>(1);
-  const [price, setPrice] = useState<number>(0);
+  const [items, setItems] = useState<SaleItem[]>([
+    { product: "", quantity: 1, price: 0},
+  ]);
 
-  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleItemmChange = (index : number, field: keyof SaleItem, value: string | number) => {
+    const newItems = [...items];
+    newItems[index][field] = value as never;
+    setItems(newItems);
+  };
+
+  const addItem = () => {
+    setItems([...items, {product: "", quantity: 1, price: 0}]);
+  };
+
+  const removeItem = (index : number) => {
+    setItems(items.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    onAddSale({ product, quantity, price });
-    setProduct("");
-    setQuantity(1);
-    setPrice(0);
+
+    const validItems = items.every(i => i.product && i.quantity > 0 && i.price >= 0);
+    if (!validItems) {
+      alert("Por favor, complete todos los campos de los productos.");
+      return;
+    }
+
+    onAddSale({
+      items,
+      date: new Date().toDateString(),
+    });
+    setItems([{ product: "", quantity: 1, price: 0}]);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Producto"
-        value={product}
-        onChange={(e) => setProduct(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Cantidad"
-        value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-      />
-      <input
-        type="number"
-        placeholder="Precio"
-        value={price}
-        onChange={(e) => setPrice(Number(e.target.value))}
-      />
+      <h3>Registro de Ventas</h3>
+
+      {items.map((item, index) => (
+        <div key={index} style={{display: "flex", marginBottom: "10px", gap: "10px"}}>
+
+          <input 
+          type="text"
+          placeholder="Producto"
+          value={item.product}
+          onChange={(e) => handleItemmChange(index, "product", e.target.value)}
+           />
+
+          <input 
+          type="number"
+          min="1"
+          value={item.quantity}
+          onChange={(e) => handleItemmChange(index, "quantity", Number(e.target.value))}
+          />
+
+          <input
+          type="number"
+          min="0"
+          value={item.price}
+          onChange={(e) => handleItemmChange(index, "price", Number(e.target.value))}
+          />
+
+          <button type="button" onClick={() => removeItem(index)}>
+            Eliminar
+          </button>
+        </div>
+      ))}
+
+      <button type="button" onClick={() => addItem()}>
+            Agregar Producto
+      </button>
+
+      <br/><br/>
       <button type="submit">Registrar venta</button>
     </form>
   );
