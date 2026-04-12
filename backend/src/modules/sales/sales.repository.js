@@ -7,8 +7,8 @@ const connectionString =`${process.env.DATABASE_URL}`;
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
-const test = await prisma.sale.findMany();
-console.log(test);
+//const test = await prisma.sale.findMany();
+//console.log(test);
 
 export async function createSale(data) {
   return prisma.sale.create({
