@@ -1,9 +1,14 @@
 import "dotenv/config";
-import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../../../generated/prisma/client.ts";
 
-console.log(process.env.DATABASE_URL);
+const connectionString =`${process.env.DATABASE_URL}`;
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
+
+const test = await prisma.sale.findMany();
+console.log(test);
 
 export async function createSale(data) {
   return prisma.sale.create({
