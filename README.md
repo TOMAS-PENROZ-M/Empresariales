@@ -112,6 +112,16 @@ http://localhost:3000
 POST /api/sales
 ```
 
+Ejemplo de body para crear venta:
+```
+{
+  "items": [
+    { "name": "Producto A", "price": 1000, "qty": 2 },
+    { "name": "Producto B", "price": 500, "qty": 1 }
+  ]
+}
+```
+
 ### Obtener ventas
 
 ```http
