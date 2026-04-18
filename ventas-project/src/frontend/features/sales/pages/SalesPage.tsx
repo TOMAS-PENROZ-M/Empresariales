@@ -22,25 +22,27 @@ const SalesPage =  () => {
     };
 
     return (
-        <div style={{fontFamily:"Arial", padding:"20px"}}>
-            <h1>Ventas</h1>
+        <div className="min-h-screen p-6 bg-gray-100">
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+            <header className="max-w-6xl mx-auto mb-6">
+                <h1 className="text-3xl font-bold text-blue-900">Ventas</h1>
+                <p className="text-gray-500">Gestión y registro de ventas</p>
+            </header>
 
-                <div style={{border: "1px solid #CCC", padding:"15px", borderRadius:"8px"}}>
-                    <h2>Nueva venta</h2>
+            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 border">
                     <SalesForm onAddSale={handleAddSale}/>
                 </div>
 
-                <div style={{border: "1px solid #CCC", padding:"15px", borderRadius:"8px"}}>
+                <div className="bg-white rounded-2xl shadow-lg p-6 border">
                     <SalesSummary sales={sales}/>
                 </div>
 
-            </div>
-
-            <div style={{marginTop:"20px", border: "1px solid #CCC", padding:"15px", borderRadius:"8px"}}>
-                <h2>Listado de Ventas</h2>
+                <div className="lg:col-span-3 bg-white rounded-2xl shadow-lg p-6 border">
+                    <h2 className="text-xl font-bold text-blue-900 mb-4">Listado de Ventas</h2>
                 <SalesList sales={sales}/>
+                </div>
             </div>
         </div>
     );
