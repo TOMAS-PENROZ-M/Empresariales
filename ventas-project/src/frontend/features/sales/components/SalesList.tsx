@@ -1,16 +1,18 @@
-interface SaleItem {
-  product: string;
-  quantity: number;
-  price: number;
-}
+import type { Sale } from "../hooks/useSales";
 
-interface Sale {
-  items: SaleItem[];
-  date: string;
-}
 
 interface SalesListProps {
     sales: Sale[];
+}
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+
+  return `${date.toLocaleDateString("es-CL")} ${date.toLocaleTimeString("es-CL", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })}`;
 }
 
 const SalesList: React.FC<SalesListProps> = ({ sales }) => {
@@ -22,19 +24,21 @@ const SalesList: React.FC<SalesListProps> = ({ sales }) => {
                         <h2 className="text-lg font-semibold text-gray-800">
                             Venta {index + 1}
                         </h2>
-                        <span className="text-sm text-gray-500"> {sale.date}</span>
+                        <span className="text-sm text-gray-500">
+                            {formatDate(sale.date)}
+                        </span>
                     </div>
 
                     <ul className="divide-y divide-gray-200">
                         {sale.items.map((item, i) => (
                             <li key={i} className="flex justify-between py-2 text-gray-700">
-                                <span>{item.product}</span>
-                                <span>{item.quantity} * {item.price}</span>
+                                <span>{item.name}</span>
+                                <span>{item.qty} * {item.price}</span>
                             </li>
                         ))}
                     </ul>
                     <div className="mt-3 text-right font-bold text-gray-800">
-                        Total: ${sale.items.reduce((acc, item) => acc + item.quantity * item.price, 0)}
+                        Total: ${sale.items.reduce((acc, item) => acc + item.qty * item.price, 0)}
                     </div>
                 </div>
             ))}

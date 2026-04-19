@@ -1,8 +1,10 @@
 import { useState } from "react";
+//import type { Sale, SaleItem } from "../hooks/useSales";
+import type { createSaleInput } from "../hooks/useSales";
 
 interface SaleItem {
-  product: string;
-  quantity: number;
+  name: string;
+  qty: number;
   price: number;
 }
 
@@ -12,13 +14,13 @@ interface Sale {
 }
 
 interface SalesFormProps {
-  onAddSale: (sale: Sale) => void;
+  onAddSale: (sale: createSaleInput) => void;
 }
 
 
 const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
   const [items, setItems] = useState<SaleItem[]>([
-    { product: "", quantity: 1, price: 0},
+    { name: "", qty: 1, price: 0},
   ]);
 
   const handleItemmChange = (index : number, field: keyof SaleItem, value: string | number) => {
@@ -28,7 +30,7 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
   };
 
   const addItem = () => {
-    setItems([...items, {product: "", quantity: 1, price: 0}]);
+    setItems([...items, {name: "", qty: 1, price: 0}]);
   };
 
   const removeItem = (index : number) => {
@@ -38,17 +40,16 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
 
-    const validItems = items.every(i => i.product && i.quantity > 0 && i.price >= 0);
+    const validItems = items.every(i => i.name && i.qty > 0 && i.price >= 0);
     if (!validItems) {
       alert("Por favor, complete todos los campos de los productos.");
       return;
     }
 
     onAddSale({
-      items,
-      date: new Date().toDateString(),
+      items
     });
-    setItems([{ product: "", quantity: 1, price: 0}]);
+    setItems([{ name: "", qty: 1, price: 0}]);
   };
 
   return (
@@ -63,16 +64,16 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
             <input 
             type="text"
             placeholder="Producto"
-            value={item.product}
-            onChange={(e) => handleItemmChange(index, "product", e.target.value)}
+            value={item.name}
+            onChange={(e) => handleItemmChange(index, "name", e.target.value)}
             className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
             />
 
             <input 
             type="number"
             min="1"
-            value={item.quantity}
-            onChange={(e) => handleItemmChange(index, "quantity", Number(e.target.value))}
+            value={item.qty}
+            onChange={(e) => handleItemmChange(index, "qty", Number(e.target.value))}
             className="w-24 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
             />
 

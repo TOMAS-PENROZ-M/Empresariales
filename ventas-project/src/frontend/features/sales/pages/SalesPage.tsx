@@ -1,25 +1,15 @@
-import { useState } from "react";
+//import { useState } from "react";
 import SalesForm from "../components/SalesForm";
 import SalesList from "../components/SalesList";
 import SalesSummary from "../components/SalesSummary";
-
-interface SaleItem {
-  product: string;
-  quantity: number;
-  price: number;
-}
-
-interface Sale {
-  items: SaleItem[];
-  date: string;
-}
+import { useSales } from "../hooks/useSales";
 
 const SalesPage =  () => {
-    const [sales, setSales] = useState<Sale[]>([]);
+    const {sales, addSale, loading} = useSales();
 
-    const handleAddSale = (sale : Sale) => {
-        setSales((prev) => [...prev, sale]);
-    };
+    //const handleAddSale = (sale : Sale) => {
+    //    setSales((prev) => [...prev, sale]);
+    //};
 
     return (
         <div className="min-h-screen p-6 bg-gray-100">
@@ -32,11 +22,13 @@ const SalesPage =  () => {
             <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 border">
-                    <SalesForm onAddSale={handleAddSale}/>
+                    {/*<SalesForm onAddSale={handleAddSale}/>*/}
+                    <SalesForm onAddSale={addSale}/>
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-lg p-6 border">
-                    <SalesSummary sales={sales}/>
+                    {/*<SalesSummary sales={sales}/>*/}
+                    <SalesSummary sales={[]} />
                 </div>
 
                 <div className="lg:col-span-3 bg-white rounded-2xl shadow-lg p-6 border">

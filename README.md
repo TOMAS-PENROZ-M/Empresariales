@@ -112,6 +112,16 @@ http://localhost:3000
 POST /api/sales
 ```
 
+Ejemplo de body para crear venta:
+```
+{
+  "items": [
+    { "name": "Producto A", "price": 1000, "qty": 2 },
+    { "name": "Producto B", "price": 500, "qty": 1 }
+  ]
+}
+```
+
 ### Obtener ventas
 
 ```http
@@ -131,6 +141,11 @@ GET /api/reports/products/revenue
 ### Ver ganancias totales
 ```http
 GET /api/reports/total-revenue
+```
+
+### Dashboard (ganancia total, cantidad de ventas, ganancia promedio, top X productos mas vendidos, ganancia por producto)
+```http
+GET /api/reports/dashboard
 ```
 
 ---
