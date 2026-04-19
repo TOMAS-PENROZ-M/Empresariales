@@ -52,45 +52,65 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Registro de Ventas</h3>
+    <form onSubmit={handleSubmit} className="bg-white shadow-xl rounded-2xl p-6 max-w-3xl mx-auto border border-gray-200">
+      <h3 className="text-2xl font-bold text-blue-900 mb-6">Registro de Ventas</h3>
 
-      {items.map((item, index) => (
-        <div key={index} style={{display: "flex", marginBottom: "10px", gap: "10px"}}>
+      <div className="space-y-4">
+        {items.map((item, index) => (
+          <div key={index} 
+          className="flex flex-col md:flex-row gap-3 items-center bg-gray-50 p-4 rounded-xl border">
 
-          <input 
-          type="text"
-          placeholder="Producto"
-          value={item.product}
-          onChange={(e) => handleItemmChange(index, "product", e.target.value)}
-           />
+            <input 
+            type="text"
+            placeholder="Producto"
+            value={item.product}
+            onChange={(e) => handleItemmChange(index, "product", e.target.value)}
+            className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
+            />
 
-          <input 
-          type="number"
-          min="1"
-          value={item.quantity}
-          onChange={(e) => handleItemmChange(index, "quantity", Number(e.target.value))}
-          />
+            <input 
+            type="number"
+            min="1"
+            value={item.quantity}
+            onChange={(e) => handleItemmChange(index, "quantity", Number(e.target.value))}
+            className="w-24 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
+            />
 
-          <input
-          type="number"
-          min="0"
-          value={item.price}
-          onChange={(e) => handleItemmChange(index, "price", Number(e.target.value))}
-          />
+            <input
+            type="number"
+            min="0"
+            value={item.price}
+            onChange={(e) => handleItemmChange(index, "price", Number(e.target.value))}
+            className="w-28 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
+            />
 
-          <button type="button" onClick={() => removeItem(index)}>
-            Eliminar
-          </button>
-        </div>
-      ))}
+            <button 
+            type="button" 
+            onClick={() => removeItem(index)}
+            className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition"
+            >
+              Eliminar
+            </button>
+          </div>
+        ))}
+      </div>
 
-      <button type="button" onClick={() => addItem()}>
-            Agregar Producto
-      </button>
+      <div className="flex justify-between mt-6">
+        <button 
+        type="button" 
+        onClick={() => addItem()}
+        className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition"
+        >
+          + Agregar Producto
+        </button>
 
-      <br/><br/>
-      <button type="submit">Registrar venta</button>
+        <button 
+        type="submit"
+        className="bg-blue-900 hover:bg-blue-950 text-white px-6 py-2 rounded-lg font-semibold transition"
+        >
+          Registrar venta
+        </button>
+      </div>    
     </form>
   );
 };
