@@ -16,3 +16,20 @@ export async function apiFetch(endpoint: string, options?: RequestInit) {
 
   return res.json();
 }
+
+export const getDashboard = async (params?: {
+  start?: string;
+  end?: string;
+  limit?: number;
+}) => {
+  const query = new URLSearchParams();
+
+  if (params?.start) query.append("start", params.start);
+  if (params?.end) query.append("end", params.end);
+  if (params?.limit) query.append("limit", params.limit.toString());
+
+  const res = await fetch(`${API_URL}/reports/dashboard?${query.toString()}`);
+  if (!res.ok) throw new Error("Error fetching dashboard");
+
+  return res.json();
+};

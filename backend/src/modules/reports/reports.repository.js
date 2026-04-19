@@ -7,15 +7,29 @@ const connectionString =`${process.env.DATABASE_URL}`;
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
+function parseLocalDate(dateStr) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 // filtro de fechas para reportes
 function buildDateFilter(start, end) {
   if (!start && !end) return {};
 
+  const filter = {};
+
+  if (start) {
+    filter.gte = parseLocalDate(start);
+  }
+
+  if (end) {
+    const endDate = parseLocalDate(end);
+    endDate.setDate(endDate.getDate() + 1);
+    filter.lt = endDate;
+  }
+
   return {
-    date: {
-      ...(start && { gte: new Date(start) }),
-      ...(end && { lte: new Date(end) })
-    }
+    date: filter
   };
 }
 

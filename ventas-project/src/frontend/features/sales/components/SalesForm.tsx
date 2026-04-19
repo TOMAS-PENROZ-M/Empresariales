@@ -8,11 +8,6 @@ interface SaleItem {
   price: number;
 }
 
-interface Sale {
-  items: SaleItem[];
-  date: string;
-}
-
 interface SalesFormProps {
   onAddSale: (sale: createSaleInput) => void;
 }
@@ -54,7 +49,7 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow-xl rounded-2xl p-6 max-w-3xl mx-auto border border-gray-200">
-      <h3 className="text-2xl font-bold text-blue-900 mb-6">Registro de Ventas</h3>
+      <h3 className="text-2xl font-bold  text-blue-900 mb-6">Registro de Ventas</h3>
 
       <div className="space-y-4">
         {items.map((item, index) => (
