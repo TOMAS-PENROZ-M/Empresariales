@@ -19,6 +19,7 @@ function buildDateFilter(start, end) {
   };
 }
 
+// Cantidad de cada producto vendido
 export async function getProductQuantities({ start, end }) {
   const dateFilter = buildDateFilter(start, end);
 
@@ -33,6 +34,7 @@ export async function getProductQuantities({ start, end }) {
   });
 }
 
+// Ganancias por producto
 export async function getProductRevenue({ start, end }) {
   const dateFilter = buildDateFilter(start, end);
 
@@ -57,6 +59,7 @@ export async function getProductRevenue({ start, end }) {
   return result;
 }
 
+// Ganancias totales
 export async function getTotalRevenue({ start, end }) {
   const dateFilter = buildDateFilter(start, end);
 
@@ -70,4 +73,41 @@ export async function getTotalRevenue({ start, end }) {
   return {
     total: result._sum.total || 0
   };
+}
+
+// Ganancias totales y cantidad de transacciones para el dashboard
+export async function getSalesStats({ start, end }) {
+  const dateFilter = buildDateFilter(start, end);
+
+  const result = await prisma.sale.aggregate({
+    where: dateFilter,
+    _sum: { total: true },
+    _count: { id: true }
+  });
+
+  return {
+    totalRevenue: result._sum.total || 0,
+    totalTransactions: result._count.id || 0
+  };
+}
+
+// Top 5 productos más vendidos
+export async function getTopProducts({ start, end, limit }) {
+  const dateFilter = buildDateFilter(start, end);
+
+  return prisma.item.groupBy({
+    by: ["name"],
+    where: {
+      sale: dateFilter
+    },
+    _sum: {
+      qty: true
+    },
+    orderBy: {
+      _sum: {
+        qty: "desc"
+      }
+    },
+    take: limit || 5
+  });
 }

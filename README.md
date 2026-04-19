@@ -143,6 +143,11 @@ GET /api/reports/products/revenue
 GET /api/reports/total-revenue
 ```
 
+### Dashboard (ganancia total, cantidad de ventas, ganancia promedio, top X productos mas vendidos, ganancia por producto)
+```http
+GET /api/reports/dashboard
+```
+
 ---
 
 ## 🧠 Notas
