@@ -13,6 +13,13 @@ export interface Sale {
   total: number;
   date: string;
 }
+export interface createSaleInput {
+    items: {
+        name: string;
+        qty: number;
+        price: number;
+    }[];
+}
 
 export function useSales() {
   const [sales, setSales] = useState<Sale[]>([]);
@@ -24,10 +31,18 @@ export function useSales() {
     setLoading(false);
   }
 
-  async function addSale(sale: Omit<Sale, "id" | "total">) {
-    const newSale = await createSale(sale);
+  async function addSale(input: createSaleInput) {
+  try {
+    const newSale = await createSale(input);
+
+    // actualización optimista simple
     setSales(prev => [...prev, newSale]);
+
+  } catch (error) {
+    console.error("Error creando venta:", error);
+    throw error;
   }
+}
 
   useEffect(() => {
     fetchSales();
@@ -35,3 +50,4 @@ export function useSales() {
 
   return { sales, loading, addSale };
 }
+

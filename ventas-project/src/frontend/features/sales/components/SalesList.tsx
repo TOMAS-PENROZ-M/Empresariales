@@ -5,6 +5,16 @@ interface SalesListProps {
     sales: Sale[];
 }
 
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+
+  return `${date.toLocaleDateString("es-CL")} ${date.toLocaleTimeString("es-CL", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })}`;
+}
+
 const SalesList: React.FC<SalesListProps> = ({ sales }) => {
     return (
         <div className="space-y-6">
@@ -14,7 +24,9 @@ const SalesList: React.FC<SalesListProps> = ({ sales }) => {
                         <h2 className="text-lg font-semibold text-gray-800">
                             Venta {index + 1}
                         </h2>
-                        <span className="text-sm text-gray-500"> {sale.date}</span>
+                        <span className="text-sm text-gray-500">
+                            {formatDate(sale.date)}
+                        </span>
                     </div>
 
                     <ul className="divide-y divide-gray-200">

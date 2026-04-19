@@ -1,5 +1,6 @@
 import { useState } from "react";
 //import type { Sale, SaleItem } from "../hooks/useSales";
+import type { createSaleInput } from "../hooks/useSales";
 
 interface SaleItem {
   name: string;
@@ -13,7 +14,7 @@ interface Sale {
 }
 
 interface SalesFormProps {
-  onAddSale: (sale: Sale) => void;
+  onAddSale: (sale: createSaleInput) => void;
 }
 
 
@@ -46,8 +47,7 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
     }
 
     onAddSale({
-      items,
-      date: new Date().toDateString(),
+      items
     });
     setItems([{ name: "", qty: 1, price: 0}]);
   };

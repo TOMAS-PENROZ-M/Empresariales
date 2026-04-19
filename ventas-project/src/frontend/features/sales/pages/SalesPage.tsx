@@ -2,11 +2,10 @@
 import SalesForm from "../components/SalesForm";
 import SalesList from "../components/SalesList";
 import SalesSummary from "../components/SalesSummary";
-import type { Sale } from "../hooks/useSales";
 import { useSales } from "../hooks/useSales";
 
 const SalesPage =  () => {
-    const {sales, loading} = useSales();
+    const {sales, addSale, loading} = useSales();
 
     //const handleAddSale = (sale : Sale) => {
     //    setSales((prev) => [...prev, sale]);
@@ -24,7 +23,7 @@ const SalesPage =  () => {
 
                 <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 border">
                     {/*<SalesForm onAddSale={handleAddSale}/>*/}
-                    <SalesForm onAddSale={() => {}}/>
+                    <SalesForm onAddSale={addSale}/>
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-lg p-6 border">
