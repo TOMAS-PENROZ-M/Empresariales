@@ -56,34 +56,43 @@ const SalesForm: React.FC<SalesFormProps> = ({ onAddSale }) => {
           <div key={index} 
           className="flex flex-col md:flex-row gap-3 items-center bg-gray-50 p-4 rounded-xl border">
 
-            <input 
-            type="text"
-            placeholder="Producto"
-            value={item.name}
-            onChange={(e) => handleItemmChange(index, "name", e.target.value)}
-            className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
-            />
+            <div className="flex flex-col flex-1">
+              <label className="text-sm font-medium text-gray-700 mb-1">Producto</label>
+              <input 
+              type="text"
+              placeholder="Ej: papas"
+              value={item.name}
+              onChange={(e) => handleItemmChange(index, "name", e.target.value)}
+              className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
+              />
+            </div>
 
-            <input 
-            type="number"
-            min="1"
-            value={item.qty}
-            onChange={(e) => handleItemmChange(index, "qty", Number(e.target.value))}
-            className="w-24 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
-            />
+            <div className="flex flex-col">
+              <label className="text-sm font-medium text-gray-700 mb-1">Cantidad</label>
+              <input 
+              type="number"
+              min="1"
+              value={item.qty}
+              onChange={(e) => handleItemmChange(index, "qty", Number(e.target.value))}
+              className="w-24 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
+              />
+            </div>
 
-            <input
-            type="number"
-            min="0"
-            value={item.price}
-            onChange={(e) => handleItemmChange(index, "price", Number(e.target.value))}
-            className="w-28 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
-            />
+            <div className="flex flex-col">
+              <label className="text-sm font-medium text-gray-700 mb-1">Precio</label>
+              <input
+              type="number"
+              min="0"
+              value={item.price}
+              onChange={(e) => handleItemmChange(index, "price", Number(e.target.value))}
+              className="w-28 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800"
+              />
+            </div>
 
             <button 
             type="button" 
             onClick={() => removeItem(index)}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition"
+            className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition mt-6 md:mt-0"
             >
               Eliminar
             </button>

@@ -14,6 +14,12 @@ export async function getSales(req, res) {
     const sales = await services.getSales();
     res.json(sales);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    if (error.name === "NotFoundError") {
+      return res.status(404).json({ error: error.message});
+    } else if (error.name === "ValidationError") {
+      return res.status(400).json({ error: error.message});
+    } else { 
+      res.status(500).json({ error: error.message });
+    }
   }
 }
