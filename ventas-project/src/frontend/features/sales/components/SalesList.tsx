@@ -1,13 +1,5 @@
-interface SaleItem {
-  product: string;
-  quantity: number;
-  price: number;
-}
+import type { Sale } from "../hooks/useSales";
 
-interface Sale {
-  items: SaleItem[];
-  date: string;
-}
 
 interface SalesListProps {
     sales: Sale[];
@@ -28,13 +20,13 @@ const SalesList: React.FC<SalesListProps> = ({ sales }) => {
                     <ul className="divide-y divide-gray-200">
                         {sale.items.map((item, i) => (
                             <li key={i} className="flex justify-between py-2 text-gray-700">
-                                <span>{item.product}</span>
-                                <span>{item.quantity} * {item.price}</span>
+                                <span>{item.name}</span>
+                                <span>{item.qty} * {item.price}</span>
                             </li>
                         ))}
                     </ul>
                     <div className="mt-3 text-right font-bold text-gray-800">
-                        Total: ${sale.items.reduce((acc, item) => acc + item.quantity * item.price, 0)}
+                        Total: ${sale.items.reduce((acc, item) => acc + item.qty * item.price, 0)}
                     </div>
                 </div>
             ))}
