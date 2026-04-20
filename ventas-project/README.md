@@ -9,7 +9,7 @@ Construida con **React + TypeScript + Vite**.
 
 1. # clonar repositorio
    ```bash
-   git clone https://github.com/usuario/ventas-project.git
+   git clone https://github.com/TOMAS-PENROZ-M/Empresariales.git
    cd ventas-project
 
 2. # instalar dependecias
