@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import SalesForm from "../components/SalesForm";
 import SalesList from "../components/SalesList";
-import SalesSummary from "../components/SalesSummary";
 import { useSales } from "../hooks/useSales";
 
 const SalesPage =  () => {
